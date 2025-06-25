@@ -27,16 +27,13 @@ export default function Navbar() {
 
         {/* Search Bar */}
         <div className="relative hidden md:block">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
             placeholder="Search any Location, City, State or Country"
             className="w-80 rounded-md bg-slate-700/60 py-2 pl-9 pr-3 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
-        <button className="hidden md:inline-flex items-center justify-center rounded-md p-2 text-slate-300 hover:bg-slate-700/50">
-          <RotateCcw className="h-4 w-4" />
-        </button>
 
         {/* Main menu items */}
         <ul className="ml-4 hidden lg:flex gap-6 text-sm font-medium text-slate-200">
