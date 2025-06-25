@@ -8,7 +8,8 @@ export default function CityRankCard({ currentCity = "Indore" }) {
   const [totalCities, setTotalCities] = useState(0);
   const [level, setLevel] = useState("");
 
-  // AQI level labels
+  const API_KEY = "YOUR_WEATHERAPI_KEY_HERE";
+
   const getAqiLevel = (value) => {
     if (value <= 30) return "Good";
     if (value <= 60) return "Moderate";
@@ -28,26 +29,43 @@ export default function CityRankCard({ currentCity = "Indore" }) {
   };
 
   useEffect(() => {
+    const cities = [
+      "Delhi", "Mumbai", "Kolkata", "Chennai", "Bengaluru", "Hyderabad", "Ahmedabad",
+      "Pune", "Jaipur", "Lucknow", "Kanpur", "Nagpur", "Indore", "Bhopal", "Patna",
+      "Ludhiana", "Agra", "Nashik", "Faridabad", "Meerut", "Rajkot", "Varanasi",
+      "Amritsar", "Visakhapatnam", "Allahabad", "Ranchi", "Guwahati", "Chandigarh",
+      "Mysuru", "Jodhpur", "Raipur", "Gwalior", "Vijayawada", "Madurai", "Jalandhar",
+      "Kota", "Bhubaneswar", "Thiruvananthapuram", "Salem", "Warangal", "Hubli",
+      "Bareilly", "Aligarh", "Moradabad", "Guntur", "Noida", "Ghaziabad", "Howrah",
+      "Dhanbad", "Asansol","Nagpur"
+    ];
+
     const fetchAQIData = async () => {
       try {
-        const res = await axios.get(
-          `https://api.openaq.org/v2/latest?country=IN&parameter=pm25&limit=1000`
+        const results = await Promise.all(
+          cities.map(async (city) => {
+            try {
+              const res = await axios.get("https://api.weatherapi.com/v1/current.json", {
+                params: {
+                  key: API_KEY,
+                  q: city,
+                  aqi: "yes",
+                },
+              });
+              return {
+                city: city,
+                aqi: res.data.current.air_quality.pm2_5,
+              };
+            } catch {
+              return null;
+            }
+          })
         );
-        const data = res.data.results;
 
-        const cityAQIs = data
-          .filter((entry) => entry.city && entry.measurements[0]?.value)
-          .map((entry) => ({
-            city: entry.city,
-            aqi: entry.measurements[0].value,
-          }));
-
-        // Sort cities by AQI descending
+        const cityAQIs = results.filter((entry) => entry && typeof entry.aqi === "number");
         const sorted = cityAQIs.sort((a, b) => b.aqi - a.aqi);
-
         const rank = sorted.findIndex(
-          (entry) =>
-            entry.city.toLowerCase() === currentCity.toLowerCase()
+          (entry) => entry.city.toLowerCase() === currentCity.toLowerCase()
         );
 
         if (rank !== -1) {
@@ -74,7 +92,6 @@ export default function CityRankCard({ currentCity = "Indore" }) {
 
   return (
     <div className="bg-slate-800 text-white p-5 rounded-2xl shadow-md flex justify-between items-center w-full max-w-xl mx-auto">
-      {/* City Info */}
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2 text-lg font-semibold">
           <MapPin className="w-5 h-5 text-sky-400" />
@@ -85,7 +102,6 @@ export default function CityRankCard({ currentCity = "Indore" }) {
         </div>
       </div>
 
-      {/* AQI Display */}
       <div className="flex items-center gap-4">
         <div className="text-center">
           <p className="text-xl font-bold">{aqi.toFixed(1)}</p>
