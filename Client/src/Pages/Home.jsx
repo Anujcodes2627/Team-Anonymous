@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import AqiCard from "../components/AqiCard";
 import AqiIndexCard from "../components/AqiIndexCard";
-import AQIMap from "../components/AQIMAp";
+import AQIMap from "../components/AQIMap"
 export default function Home(props) {
   return (
     <>
