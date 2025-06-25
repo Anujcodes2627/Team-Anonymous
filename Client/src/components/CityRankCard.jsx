@@ -8,7 +8,7 @@ export default function CityRankCard({ currentCity = "Indore" }) {
   const [totalCities, setTotalCities] = useState(0);
   const [level, setLevel] = useState("");
 
-  const API_KEY = "YOUR_WEATHERAPI_KEY_HERE";
+  const API_KEY = "9c65c3bf74d84876ace145329252506";
 
   const getAqiLevel = (value) => {
     if (value <= 30) return "Good";
@@ -30,14 +30,106 @@ export default function CityRankCard({ currentCity = "Indore" }) {
 
   useEffect(() => {
     const cities = [
-      "Delhi", "Mumbai", "Kolkata", "Chennai", "Bengaluru", "Hyderabad", "Ahmedabad",
-      "Pune", "Jaipur", "Lucknow", "Kanpur", "Nagpur", "Indore", "Bhopal", "Patna",
-      "Ludhiana", "Agra", "Nashik", "Faridabad", "Meerut", "Rajkot", "Varanasi",
-      "Amritsar", "Visakhapatnam", "Allahabad", "Ranchi", "Guwahati", "Chandigarh",
-      "Mysuru", "Jodhpur", "Raipur", "Gwalior", "Vijayawada", "Madurai", "Jalandhar",
-      "Kota", "Bhubaneswar", "Thiruvananthapuram", "Salem", "Warangal", "Hubli",
-      "Bareilly", "Aligarh", "Moradabad", "Guntur", "Noida", "Ghaziabad", "Howrah",
-      "Dhanbad", "Asansol","Nagpur"
+      "Delhi",
+      "Mumbai",
+      "Kolkata",
+      "Chennai",
+      "Bangalore",
+      "Hyderabad",
+      "Ahmedabad",
+      "Pune",
+      "Jaipur",
+      "Lucknow",
+      "Kanpur",
+      "Nagpur",
+      "Indore",
+      "Bhopal",
+      "Patna",
+      "Ludhiana",
+      "Agra",
+      "Nashik",
+      "Vadodara",
+      "Faridabad",
+      "Ghaziabad",
+      "Rajkot",
+      "Meerut",
+      "Kalyan",
+      "Vasai",
+      "Varanasi",
+      "Srinagar",
+      "Aurangabad",
+      "Dhanbad",
+      "Amritsar",
+      "Navi Mumbai",
+      "Allahabad",
+      "Howrah",
+      "Gwalior",
+      "Jabalpur",
+      "Coimbatore",
+      "Vijayawada",
+      "Jodhpur",
+      "Madurai",
+      "Raipur",
+      "Kota",
+      "Guwahati",
+      "Chandigarh",
+      "Solapur",
+      "Hubli",
+      "Mysore",
+      "Tiruchirappalli",
+      "Bareilly",
+      "Aligarh",
+      "Moradabad",
+      "Guntur",
+      "Bhiwandi",
+      "Saharanpur",
+      "Gorakhpur",
+      "Bikaner",
+      "Amravati",
+      "Noida",
+      "Jamshedpur",
+      "Bhilai",
+      "Cuttack",
+      "Firozabad",
+      "Kochi",
+      "Thiruvananthapuram",
+      "Bhubaneswar",
+      "Dehradun",
+      "Asansol",
+      "Nanded",
+      "Ajmer",
+      "Kolhapur",
+      "Akola",
+      "Gulbarga",
+      "Jamnagar",
+      "Ujjain",
+      "Loni",
+      "Siliguri",
+      "Jhansi",
+      "Ulhasnagar",
+      "Nellore",
+      "Jammu",
+      "Sangli",
+      "Belgaum",
+      "Raurkela",
+      "Mangalore",
+      "Erode",
+      "Bokaro",
+      "Tirunelveli",
+      "Malegaon",
+      "Durg",
+      "Bharatpur",
+      "Panipat",
+      "Ambattur",
+      "Nizamabad",
+      "Bilaspur",
+      "Shimoga",
+      "Jalgaon",
+      "Anantapur",
+      "Kurnool",
+      "Davangere",
+      "Udaipur",
+      "Bihar Sharif",
     ];
 
     const fetchAQIData = async () => {
@@ -45,13 +137,16 @@ export default function CityRankCard({ currentCity = "Indore" }) {
         const results = await Promise.all(
           cities.map(async (city) => {
             try {
-              const res = await axios.get("https://api.weatherapi.com/v1/current.json", {
-                params: {
-                  key: API_KEY,
-                  q: city,
-                  aqi: "yes",
-                },
-              });
+              const res = await axios.get(
+                "https://api.weatherapi.com/v1/current.json",
+                {
+                  params: {
+                    key: API_KEY,
+                    q: city,
+                    aqi: "yes",
+                  },
+                }
+              );
               return {
                 city: city,
                 aqi: res.data.current.air_quality.pm2_5,
@@ -62,7 +157,9 @@ export default function CityRankCard({ currentCity = "Indore" }) {
           })
         );
 
-        const cityAQIs = results.filter((entry) => entry && typeof entry.aqi === "number");
+        const cityAQIs = results.filter(
+          (entry) => entry && typeof entry.aqi === "number"
+        );
         const sorted = cityAQIs.sort((a, b) => b.aqi - a.aqi);
         const rank = sorted.findIndex(
           (entry) => entry.city.toLowerCase() === currentCity.toLowerCase()
@@ -91,7 +188,7 @@ export default function CityRankCard({ currentCity = "Indore" }) {
   }
 
   return (
-    <div className="bg-slate-800 text-white p-5 rounded-2xl shadow-md flex justify-between items-center w-full max-w-xl mx-auto">
+    <div className="bg-slate-800 mt-3 text-white p-5 rounded-2xl shadow-md flex justify-between items-center max-w-xl mx-auto">
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2 text-lg font-semibold">
           <MapPin className="w-5 h-5 text-sky-400" />

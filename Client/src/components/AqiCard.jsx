@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MapPin, Heart, Share2, ArrowUpRight, Cloud } from "lucide-react";
 import axios from "axios";
+import CityRankCard from "./CityRankCard";
 
 function AqiCard() {
   const [aqiValue, setAqiValue] = useState(76);
@@ -14,6 +15,7 @@ function AqiCard() {
   const [uvIndex, setUvIndex] = useState(2);
   const [location, setLocation] = useState("Locating...");
   const [searchQuery, setSearchQuery] = useState("");
+  const [city, setCity] = useState("Bhopal");
 
   const API_KEY = "9c65c3bf74d84876ace145329252506";
 
@@ -66,6 +68,7 @@ function AqiCard() {
       setWindSpeed(data.current.wind_kph);
       setUvIndex(data.current.uv);
       setLocation(`${data.location.name}, ${data.location.region}`);
+      setCity(`${data.location.name}`);
     } catch (err) {
       console.error("Failed to fetch AQI:", err);
       setLocation("Error fetching data");
@@ -95,106 +98,110 @@ function AqiCard() {
   }, []);
 
   return (
-    <div className="rounded-2xl overflow-hidden bg-gradient-to-b from-slate-800 to-yellow-400 text-white shadow-lg relative p-6">
-      <div className="flex justify-between items-start">
-        <div>
-          <h2 className="text-xl font-semibold">
-            Real-time Air Quality Index (AQI)
-          </h2>
-          <p className="text-blue-300 underline text-sm">{location}</p>
-          <p className="text-sm text-slate-200 mt-1">
-            Live AQI data fetched using WeatherAPI
-          </p>
-          <div className="mt-2">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search city..."
-              className="px-2 py-1 rounded text-black text-sm"
-            />
+    <>
+      <div className="rounded-2xl  overflow-hidden bg-gradient-to-b from-slate-800 to-yellow-400 text-white shadow-lg relative p-6">
+        <div className="flex justify-between items-start">
+          <div>
+            <h2 className="text-xl font-semibold">
+              Real-time Air Quality Index (AQI)
+            </h2>
+            <p className="text-blue-300 underline text-sm">{location}</p>
+            <p className="text-sm text-slate-200 mt-1">
+              Live AQI data fetched using WeatherAPI
+            </p>
+            <div className="mt-2">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search city..."
+                className="px-2 py-1 rounded text-black text-sm"
+              />
+              <button
+                onClick={() => fetchData(searchQuery)}
+                className="ml-2 px-3 py-1 text-sm rounded bg-blue-500 hover:bg-blue-600"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+          <div className="flex gap-2">
             <button
-              onClick={() => fetchData(searchQuery)}
-              className="ml-2 px-3 py-1 text-sm rounded bg-blue-500 hover:bg-blue-600"
+              onClick={handleLocateMe}
+              className="border border-blue-400 rounded px-3 py-1 text-sm flex items-center gap-1"
             >
-              Search
+              <MapPin className="w-4 h-4" />
+              Locate me
+            </button>
+            <button>
+              <Heart className="w-5 h-5 text-slate-300" />
+            </button>
+            <button>
+              <Share2 className="w-5 h-5 text-slate-300" />
             </button>
           </div>
         </div>
-        <div className="flex gap-2">
-          <button
-            onClick={handleLocateMe}
-            className="border border-blue-400 rounded px-3 py-1 text-sm flex items-center gap-1"
-          >
-            <MapPin className="w-4 h-4" />
-            Locate me
-          </button>
-          <button>
-            <Heart className="w-5 h-5 text-slate-300" />
-          </button>
-          <button>
-            <Share2 className="w-5 h-5 text-slate-300" />
-          </button>
-        </div>
-      </div>
 
-      <div className="mt-6 grid grid-cols-3 items-center">
-        <div className="text-center">
-          <div className="text-5xl font-bold text-yellow-300">{aqiValue}</div>
-          <div
-            className={`mt-1 ${aqiColors[aqiLevel]} px-2 py-1 rounded text-sm inline-block`}
-          >
-            {aqiLevel}
-          </div>
-        </div>
-
-        <div className="relative flex flex-col items-center w-full">
-          <p className="text-sm text-slate-200">
-            PM10: <span className="font-semibold">{pm10} µg/m³</span>
-          </p>
-          <p className="text-sm text-slate-200">
-            PM2.5: <span className="font-semibold">{pm25} µg/m³</span>
-          </p>
-
-          <div className="mt-2 flex gap-1 text-[10px] w-full justify-between text-white">
-            <span className="text-green-300">Good</span>
-            <span className="text-yellow-300">Moderate</span>
-            <span className="text-orange-300">Poor</span>
-            <span className="text-red-400">Unhealthy</span>
-            <span className="text-pink-300">Severe</span>
-            <span className="text-red-600">Hazardous</span>
-          </div>
-
-          <div className="relative w-full h-1.5 bg-gradient-to-r from-green-400 via-yellow-300 via-orange-400 via-red-400 to-red-700 rounded-full mt-1">
+        <div className="mt-6 grid grid-cols-3 items-center">
+          <div className="text-center">
+            <div className="text-5xl font-bold text-yellow-300">{aqiValue}</div>
             <div
-              className="absolute -top-1 w-3 h-3 bg-white border border-black rounded-full transition-all duration-300"
-              style={{
-                left: `${getAqiDotPosition(aqiValue)}%`,
-                transform: "translateX(-50%)",
-                boxShadow: "inset 0 0 2px 2px #fcd34d",
-              }}
-            ></div>
-          </div>
-        </div>
-
-        <div className="flex flex-col items-end justify-center">
-          <img src="/images/boy.svg" alt="boy" className="w-20 h-28" />
-          <div className="bg-white/10 backdrop-blur-sm p-3 rounded-xl mt-2 text-sm">
-            <div className="flex items-center gap-2 text-white">
-              <Cloud className="w-5 h-5" />
-              <span className="text-xl font-bold">{temperature}°C</span>
-              <span className="text-sm">{weatherStatus}</span>
-              <ArrowUpRight className="w-4 h-4 ml-auto" />
+              className={`mt-1 ${aqiColors[aqiLevel]} px-2 py-1 rounded text-sm inline-block`}
+            >
+              {aqiLevel}
             </div>
-            <div className="grid grid-cols-3 text-xs gap-y-1 mt-2 text-slate-100">
-              <div>💧 {humidity}%</div>
-              <div>🍃 {windSpeed} km/h</div>
-              <div>☀️ UV: {uvIndex}</div>
+          </div>
+
+          <div className="relative flex flex-col items-center w-full">
+            <p className="text-sm text-slate-200">
+              PM10: <span className="font-semibold">{pm10} µg/m³</span>
+            </p>
+            <p className="text-sm text-slate-200">
+              PM2.5: <span className="font-semibold">{pm25} µg/m³</span>
+            </p>
+
+            <div className="mt-2 flex gap-1 text-[10px] w-full justify-between text-white">
+              <span className="text-green-300">Good</span>
+              <span className="text-yellow-300">Moderate</span>
+              <span className="text-orange-300">Poor</span>
+              <span className="text-red-400">Unhealthy</span>
+              <span className="text-pink-300">Severe</span>
+              <span className="text-red-600">Hazardous</span>
+            </div>
+
+            <div className="relative w-full h-1.5 bg-gradient-to-r from-green-400 via-yellow-300 via-orange-400 via-red-400 to-red-700 rounded-full mt-1">
+              <div
+                className="absolute -top-1 w-3 h-3 bg-white border border-black rounded-full transition-all duration-300"
+                style={{
+                  left: `${getAqiDotPosition(aqiValue)}%`,
+                  transform: "translateX(-50%)",
+                  boxShadow: "inset 0 0 2px 2px #fcd34d",
+                }}
+              ></div>
+            </div>
+          </div>
+
+          <div className="flex flex-col items-end justify-center">
+            <img src="/images/boy.svg" alt="boy" className="w-20 h-28" />
+            <div className="bg-white/10 backdrop-blur-sm p-3 rounded-xl mt-2 text-sm">
+              <div className="flex items-center gap-2 text-white">
+                <Cloud className="w-5 h-5" />
+                <span className="text-xl font-bold">{temperature}°C</span>
+                <span className="text-sm">{weatherStatus}</span>
+                <ArrowUpRight className="w-4 h-4 ml-auto" />
+              </div>
+              <div className="grid grid-cols-3 text-xs gap-y-1 mt-2 text-slate-100">
+                <div>💧 {humidity}%</div>
+                <div>🍃 {windSpeed} km/h</div>
+                <div>☀️ UV: {uvIndex}</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <CityRankCard  currentCity={city} />
+    </>
   );
 }
 
