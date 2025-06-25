@@ -13,6 +13,7 @@ import "leaflet/dist/leaflet.css";
 import Home from "./Pages/Home.jsx";
 import About from "./Pages/About.jsx";
 import Layout from "./Layout.jsx";
+import Dashboard from "./Pages/Dashboard.jsx";
 // import Contact from "./Pages/Contact.jsx";
 
 const router = createBrowserRouter(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
       {/* <Route path="contact" element={<Contact />} /> */}
+      <Route path="dashboard" element={<Dashboard />} />
     </Route>
   )
 );

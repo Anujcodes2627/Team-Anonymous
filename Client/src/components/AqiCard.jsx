@@ -100,8 +100,9 @@ function AqiCard() {
   return (
     <>
       <div className="rounded-2xl  overflow-hidden bg-gradient-to-b from-slate-800 to-yellow-400 text-white shadow-lg relative p-6">
-        <div className="flex justify-between items-start">
-          <div>
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-4 text-center md:text-left">
+          {/* Left Side */}
+          <div className="w-full md:w-auto flex flex-col items-center md:items-start">
             <h2 className="text-xl font-semibold">
               Real-time Air Quality Index (AQI)
             </h2>
@@ -109,26 +110,28 @@ function AqiCard() {
             <p className="text-sm text-slate-200 mt-1">
               Live AQI data fetched using WeatherAPI
             </p>
-            <div className="mt-2">
+            <div className="mt-2 flex flex-col sm:flex-row items-center sm:items-center gap-2 w-full sm:w-auto">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search city..."
-                className="px-2 py-1 rounded text-black text-sm"
+                className="px-2 py-1 rounded text-black text-sm w-full sm:w-auto"
               />
               <button
                 onClick={() => fetchData(searchQuery)}
-                className="ml-2 px-3 py-1 text-sm rounded bg-blue-500 hover:bg-blue-600"
+                className="px-3 py-1 text-sm rounded bg-blue-500 hover:bg-blue-600 text-white"
               >
                 Search
               </button>
             </div>
           </div>
-          <div className="flex gap-2">
+
+          {/* Right Side Buttons */}
+          <div className="flex gap-2 md:mt-0 mt-3">
             <button
               onClick={handleLocateMe}
-              className="border border-blue-400 rounded px-3 py-1 text-sm flex items-center gap-1"
+              className="border border-blue-400 rounded px-3 py-1 text-sm flex items-center gap-1 text-white"
             >
               <MapPin className="w-4 h-4" />
               Locate me
@@ -142,7 +145,8 @@ function AqiCard() {
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-3 items-center">
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+          {/* AQI Value + Level */}
           <div className="text-center">
             <div className="text-5xl font-bold text-yellow-300">{aqiValue}</div>
             <div
@@ -152,7 +156,8 @@ function AqiCard() {
             </div>
           </div>
 
-          <div className="relative flex flex-col items-center w-full">
+          {/* AQI Detail with Bar */}
+          <div className="flex flex-col items-center w-full">
             <p className="text-sm text-slate-200">
               PM10: <span className="font-semibold">{pm10} µg/m³</span>
             </p>
@@ -181,9 +186,14 @@ function AqiCard() {
             </div>
           </div>
 
-          <div className="flex flex-col items-end justify-center">
-            <img src="/images/boy.svg" alt="boy" className="w-20 h-28" />
-            <div className="bg-white/10 backdrop-blur-sm p-3 rounded-xl mt-2 text-sm">
+          {/* Weather Info + Image */}
+          <div className="flex flex-col md:items-end items-center justify-center">
+            <img
+              src="/images/boy.svg"
+              alt="boy"
+              className="w-24 h-28 md:w-20 md:h-28"
+            />
+            <div className="bg-white/10 backdrop-blur-sm p-3 rounded-xl mt-2 text-sm w-full md:w-auto">
               <div className="flex items-center gap-2 text-white">
                 <Cloud className="w-5 h-5" />
                 <span className="text-xl font-bold">{temperature}°C</span>
@@ -200,7 +210,7 @@ function AqiCard() {
         </div>
       </div>
 
-      <CityRankCard  currentCity={city} />
+      <CityRankCard currentCity={city} />
     </>
   );
 }
