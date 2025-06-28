@@ -26,7 +26,9 @@ import PolicyMakerSignUp from "./Pages/Signup/PolicyMakerSignUp.jsx";
 import Dashboard from "./Pages/Dashboard.jsx";
 import BlogsPage from "./Pages/BlogsPage.jsx";
 import WasteClassification from "./Pages/WasteClassification.jsx";
+import BlogUploadForm from "./components/BlogUploadForm.jsx";
 // import Contact from "./Pages/Contact.jsx";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +36,9 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
       <Route path="login" element={<LoginPage />} />
+      <Route path="addblog" element={<BlogUploadForm/>} />
+      <Route path="dashboard" element={<Dashboard/>} />
+
 
       {/* Signup Routes */}
       <Route path="Signup/citizen" element={<CitizenSignUp />} />

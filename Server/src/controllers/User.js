@@ -3,33 +3,7 @@ import userModel from "../models/Usermodel.js";
 import generateJwtToken from "../utils/generateToken.js";
 import jwt from "jsonwebtoken";
 
-// ✅ Register User
-// export const registerUser = async (req, res) => {
-//   try {
-//     const { name, email, password } = req.body;
 
-//     // Check if user already exists
-//     const userExists = await userModel.findOne({ email });
-//     if (userExists) {
-//       return res.status(400).json({ message: "User already exists" });
-//     }
-
-//     // Create new user (password is hashed by schema middleware)
-//     const user = await userModel.create({ name, email, password });
-
-//     // Generate token
-//     const userToken = user.generateJwtToken();
-
-//     // Send response
-//     return res.status(201).json({
-//       message: "User registered successfully",
-//       user,
-//       userToken,
-//     });
-//   } catch (error) {
-//     return res.status(500).json({ message: error.message });
-//   }
-// };
 export const registerUser = async (req, res) => {
   try {
     console.log("📥 Signup Request Body:", req.body);
@@ -62,34 +36,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
-// ✅ Login User
-// export const loginUser = async (req, res) => {
-//   try {
-//     console.log(req.body);
-//     const { email, password } = req.body;
 
-//     const user = await userModel.findOne({ email });
-//     if (!user) {
-//       return res.status(404).json({ message: "Invalid email or password" });
-//     }
-
-//     // Compare password using instance method from schema
-//     const isMatch = await user.comparePassword(password);
-//     if (!isMatch) {
-//       return res.status(400).json({ message: "Invalid email or password" });
-//     }
-
-//     const userToken = user.generateJwtToken();
-
-//     return res.status(200).json({
-//       message: "Login successful",
-//       user,
-//       userToken,
-//     });
-//   } catch (error) {
-//     return res.status(500).json({ message: error.message });
-//   }
-// };
 export const loginUser = async (req, res) => {
   try {
     console.log("📥 Incoming Login Body:", req.body); // 🔍 Log request body
