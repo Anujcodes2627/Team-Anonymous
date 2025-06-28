@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -28,8 +27,10 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-slate-900/80 backdrop-blur-md shadow">
+    // <header className="sticky top-0 ml-18 mt-3 border-amber-200 border-2 rounded-3xl z-50 w-[90%] bg-slate-900/80 backdrop-blur-3xl shadow">
+    <header className="sticky top-0 z-50 w-[90%] mx-auto mt-3 border border-white/20 rounded-3xl bg-[#0f172b] backdrop-blur-xl shadow-xl">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
+        {/* Logo */}
         <Link
           to="/"
           className="flex items-center text-2xl font-bold tracking-tight text-white"
@@ -52,14 +53,15 @@ export default function Navbar() {
 
           {!user ? (
             <>
-              <Link to="/login" className="hover:text-sky-400 transition-colors">
+              <Link
+                to="/login"
+                className="hover:text-sky-400 transition-colors"
+              >
                 Login
               </Link>
               <div className="relative">
                 <button
-                  onClick={() =>
-                    setIsSignupDropdownOpen(!isSignupDropdownOpen)
-                  }
+                  onClick={() => setIsSignupDropdownOpen(!isSignupDropdownOpen)}
                   className="hover:text-sky-400 transition-colors"
                 >
                   SignUp
@@ -151,4 +153,3 @@ export default function Navbar() {
     </header>
   );
 }
-      

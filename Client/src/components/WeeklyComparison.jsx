@@ -8,7 +8,7 @@ const data = [
   { name: 'Fri', saved: 350, emitted: 450 },
   { name: 'Sat', saved: 500, emitted: 465 },
   { name: 'Sun', saved: 300, emitted: 200 },
-  // ...
+ 
 ];
 
 const WeeklyComparison = () => (
