@@ -8,25 +8,29 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import "leaflet/dist/leaflet.css";
-
-// Import your pages
+import { Provider } from "react-redux";
+import store from "./redux/store.js";
 import Home from "./Pages/Home.jsx";
 import About from "./Pages/About.jsx";
 import Layout from "./Layout.jsx";
-// import Contact from "./Pages/Contact.jsx";
+import LoginPage from "./Pages/LoginPage.jsx";
+import SignUp from "./Pages/SignUp.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
-      {/* <Route path="contact" element={<Contact />} /> */}
+      <Route path="login" element={<LoginPage />} />
+      <Route path="signup" element={<SignUp />} />
     </Route>
   )
 );
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>
 );

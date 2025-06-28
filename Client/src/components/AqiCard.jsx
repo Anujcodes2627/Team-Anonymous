@@ -190,7 +190,7 @@ function AqiCard() {
                 <span className="text-sm">{weatherStatus}</span>
                 <ArrowUpRight className="w-4 h-4 ml-auto" />
               </div>
-              <div className="grid grid-cols-3 text-xs gap-y-1 mt-2 text-slate-100">
+              <div className="grid grid-cols-3 text-xl gap-y-1  mt-2  text-slate-100">
                 <div>💧 {humidity}%</div>
                 <div>🍃 {windSpeed} km/h</div>
                 <div>☀️ UV: {uvIndex}</div>
