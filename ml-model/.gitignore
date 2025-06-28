@@ -1,0 +1,65 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# Environment variables and configs
+.env
+*.env
+
+# Flask/Machine Learning log files
+*.log
+*.sqlite3
+instance/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# TensorFlow and Keras caches
+*.h5
+*.pb
+*.tflite
+*.ckpt
+checkpoints/
+saved_model/
+logs/
+models/
+
+# Temporary files
+*.bak
+*.swp
+*.tmp
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/
+
+# Pytest
+.cache/
+*.pytest_cache/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+
+# Ignore uploads or classified files if applicable
+uploads/
+classified/
+static/uploads/

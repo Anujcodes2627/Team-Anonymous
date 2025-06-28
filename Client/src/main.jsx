@@ -19,6 +19,7 @@ import SignUp from "./Pages/SignUp.jsx";
 
 import Dashboard from "./Pages/Dashboard.jsx";
 import BlogsPage from "./Pages/BlogsPage.jsx";
+import WasteClassification from "./Pages/WasteClassification.jsx";
 // import Contact from "./Pages/Contact.jsx";
 
 const router = createBrowserRouter(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
       <Route path="login" element={<LoginPage />} />
       <Route path="signup" element={<SignUp />} />\
       <Route path="blogs" element={<BlogsPage />} />
+      <Route path="waste" element={<WasteClassification />} />
       {/* <Route path="contact" element={<Contact />} /> */}
       <Route path="dashboard" element={<Dashboard />} />
     </Route>

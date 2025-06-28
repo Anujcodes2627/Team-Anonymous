@@ -2,7 +2,8 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import AqiCard from "../components/AqiCard";
 import AqiIndexCard from "../components/AqiIndexCard";
-import AQIMap from "../components/AQIMap"
+import AQIMap from "../components/AQIMap";
+import WasteClassifierCard from "../components/WasteClassifierCard";
 export default function Home(props) {
   return (
     <>
@@ -17,6 +18,7 @@ export default function Home(props) {
         </div>
 
         <AqiIndexCard />
+        <WasteClassifierCard />
       </div>
     </>
   );
