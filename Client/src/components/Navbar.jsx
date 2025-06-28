@@ -28,6 +28,7 @@ export default function Navbar() {
     { name: "Home", path: "/" },
     { name: "Blogs", path: "/blogs" },
     { name: "Login", path: "/login" },
+    { name: "A R", path: "/augmentedreality"},
   ];
 
   const signupOptions = [

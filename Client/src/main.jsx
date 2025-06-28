@@ -17,6 +17,7 @@ import About from "./Pages/About.jsx";
 import Layout from "./Layout.jsx";
 
 import LoginPage from "./Pages/LoginPage.jsx";
+import CameraPage from "./components/CameraPage.jsx";
 
 // Updated SignUp routes
 import CitizenSignUp from "./Pages/Signup/CitizenSignUp.jsx";
@@ -45,6 +46,7 @@ const router = createBrowserRouter(
       <Route path="waste" element={<WasteClassification />} />
       {/* <Route path="contact" element={<Contact />} /> */}
       <Route path="dashboard" element={<Dashboard />} />
+      <Route path="augmentedreality" element={<CameraPage />} />
     </Route>
   )
 );
