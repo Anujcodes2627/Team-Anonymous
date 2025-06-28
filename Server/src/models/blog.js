@@ -1,5 +1,4 @@
 
-
 import mongoose from 'mongoose';
 
 const { Schema, model } = mongoose;
@@ -18,13 +17,17 @@ const blogSchema = new Schema(
       type: String,
     },
     createdBy: {
-      type: Schema.Types.ObjectId,
-      ref: 'user',
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user', // ✅ This allows .populate('createdBy') to work
+    },
+    createdByEmail: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }
 );
 
-const Blog = model('blog', blogSchema); 
+const Blog = model('blog', blogSchema);
 
 export default Blog;

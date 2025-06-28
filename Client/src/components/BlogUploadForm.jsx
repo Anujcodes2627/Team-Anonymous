@@ -4,47 +4,21 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function BlogUploadForm() {
-  const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.user);
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [coverImage, setCoverImage] = useState(null);
 
   useEffect(() => {
-    if (!user) {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (!user && !storedUser) {
       alert("Please login to upload a vlog.");
       navigate("/login");
     }
   }, [user, navigate]);
 
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-
-  //     if (!title || !body || !coverImage) {
-  //       return alert("All fields are required.");
-  //     }
-
-  //     const formData = new FormData();
-  //     formData.append("title", title);
-  //     formData.append("body", body);
-  //     formData.append("coverImage", coverImage);
-
-  //     try {
-  //       await axios.post("http://localhost:4000/api/blogs/createBlog", formData, {
-  //         headers: { "Content-Type": "multipart/form-data" },
-  //         withCredentials: true, // sends cookies for auth (if needed)
-  //       });
-
-  //       alert("Vlog uploaded successfully!");
-  //       setTitle("");
-  //       setBody("");
-  //       setCoverImage(null);
-  //     } catch (error) {
-  //       console.error(error);
-  //       alert("Failed to upload vlog.");
-  //     }
-  //   };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -52,20 +26,31 @@ export default function BlogUploadForm() {
       return alert("All fields are required.");
     }
 
+    const storedUser = JSON.parse(localStorage.getItem("userInfo"));
+    const tokenObj = JSON.parse(localStorage.getItem("userToken"));
+
+    const email = storedUser?.email;
+    const token = tokenObj?.userToken;
+
+    if (!email) {
+      return alert("User email not found. Please log in again.");
+    }
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("body", body);
     formData.append("coverImage", coverImage);
+    formData.append("createdByEmail", email);
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/blogs/createBlog",
+        "http://localhost:4000/api/blogs",
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            ...(token && { Authorization: `Bearer ${token}` }),
           },
-          withCredentials: true, // Sends cookies for auth (required for req.user)
         }
       );
 
@@ -74,9 +59,7 @@ export default function BlogUploadForm() {
         setTitle("");
         setBody("");
         setCoverImage(null);
-        navigate("/bl")
-        // Optional: Redirect to blogs list or clear file input manually
-
+        navigate("/blogs");
       } else {
         alert("Blog creation failed.");
       }

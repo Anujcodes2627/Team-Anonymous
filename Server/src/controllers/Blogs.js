@@ -9,21 +9,31 @@ export const logError = (error, location = "Unknown Location") => {
   console.error("Time:", new Date().toISOString());
 };
 
+
 export const createBlog = async (req, res) => {
   try {
     const { title, body } = req.body;
+    const email=req.body.createdByEmail;
+    // console.log(email);
+    
     const coverImageURL = req.file ? `/uploads/${req.file.filename}` : null;
+
+    if (!email) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Email is required" });
+    }
 
     const blog = await Blog.create({
       title,
       body,
-      createdBy: req.user._id,
       coverImageURL,
+      createdByEmail:email ,
     });
 
     res.status(201).json({ success: true, blog });
   } catch (err) {
-    logError(err, "createBlog Controller");
+    console.error("❌ CREATE BLOG ERROR:", err);
     res.status(500).json({
       success: false,
       message: "Failed to create blog",
@@ -31,6 +41,7 @@ export const createBlog = async (req, res) => {
     });
   }
 };
+
 export const getAllBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find()
@@ -79,6 +90,41 @@ export const postComment = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to add comment",
+      error: err.message,
+    });
+  }
+};
+
+
+export const deleteBlog = async (req, res) => {
+  try {
+    const blogId = req.params.id;
+    const email = req.body.email;
+
+    if (!email) {
+      return res.status(400).json({ success: false, message: "Email is required" });
+    }
+
+    const blog = await Blog.findById(blogId);
+    if (!blog) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Blog not found" });
+    }
+
+    if (blog.createdByEmail !== email) {
+      return res
+        .status(403)
+        .json({ success: false, message: "Unauthorized to delete this blog" });
+    }
+
+    await Blog.findByIdAndDelete(blogId);
+    res.json({ success: true, message: "Blog deleted" });
+  } catch (err) {
+    console.error("❌ Error deleting blog:", err);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
       error: err.message,
     });
   }
