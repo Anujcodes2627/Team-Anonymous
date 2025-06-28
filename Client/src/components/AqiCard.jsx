@@ -36,6 +36,14 @@ function AqiCard() {
     if (value <= 300) return "Severe";
     return "Hazardous";
   };
+  const imagesAcLevel = {
+    Good: "/images/aqi-good-level.svg",
+    Moderate:"/images/aqi-moderate-level.svg",
+    Poor: "/images/aqi-poor-level.svg",
+    Unhealthy: "/images/aqi-unhealthy-level.svg",
+    Severe: "/images/aqi-severe-level.svg",
+    Hazardous: "/images/aqi-hazardous-level.svg",
+  };
 
   const getAqiDotPosition = (value) => {
     const clamped = Math.min(Math.max(value, 0), 500);
@@ -188,11 +196,17 @@ function AqiCard() {
 
           {/* Weather Info + Image */}
           <div className="flex flex-col md:items-end items-center justify-center">
-            <img
-              src="/images/boy.svg"
+            {/* <img
+              src={imagesAcLevel[aqiLevel]}
               alt="boy"
               className="w-24 h-28 md:w-20 md:h-28"
+            /> */}
+            <img
+              src={imagesAcLevel[aqiLevel] || "/images/aqi-default.svg"}
+              alt={aqiLevel}
+              className="w-24 h-28 md:w-20 md:h-28"
             />
+
             <div className="bg-white/10 backdrop-blur-sm p-3 rounded-xl mt-2 text-sm w-full md:w-auto">
               <div className="flex items-center gap-2 text-white">
                 <Cloud className="w-5 h-5" />

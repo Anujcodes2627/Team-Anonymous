@@ -202,6 +202,14 @@ export default function AqiIndexCard(props) {
     Severe: "bg-red-700",
     Hazardous: "bg-purple-600",
   };
+  const imagesAcLevel = {
+    Good: "/images/aqi-good-level.svg",
+    Moderate: "/images/aqi-moderate-level.svg",
+    Poor: "/images/aqi-poor-level.svg",
+    Unhealthy: "/images/aqi-unhealthy-level.svg",
+    Severe: "/images/aqi-severe-level.svg",
+    Hazardous: "/images/aqi-hazardous-level.svg",
+  };
   const changeCurrent = (value) => {
     setCurrent(value);
   };
@@ -227,7 +235,7 @@ export default function AqiIndexCard(props) {
 
           {/* Option Selector */}
           <div className="flex justify-center">
-            <div className="option-box w-full overflow-x-auto scrollbar-hide mb-6 bg-[#39414A] rounded-3xl px-2 py-1 flex gap-2 sm:justify-center">
+            <div className="option-box w-full overflow-x-auto scrollbar-hide mb-6 bg-[#39414A] rounded-3xl px-2 py-1 flex  sm:justify-center">
               {options.map((option, key) => (
                 <button
                   key={key}
@@ -267,16 +275,21 @@ export default function AqiIndexCard(props) {
                     </div>
 
                     {/* Description */}
-                    <div className="text-gray-300 text-sm w-full md:w-2/3">
+                    <div className="text-gray-300 text-md w-full md:w-2/3">
                       {info.description}
                     </div>
 
                     {/* Image */}
                     <div className="hidden md:block">
-                      <img
-                        src="/images/boy.svg"
+                      {/* <img
+                        src={imagesAcLevel[level]}
                         alt="boy"
                         className="w-10 h-14"
+                      /> */}
+                      <img
+                        src={imagesAcLevel[level] || "/images/default-aqi.svg"}
+                        alt={level}
+                        className="w-10 h-20"
                       />
                     </div>
                   </div>

@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/vite": "^4.1.10",
     "axios": "^1.10.0",
+    "gsap": "^3.13.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.522.0",
     "react": "^19.1.0",
