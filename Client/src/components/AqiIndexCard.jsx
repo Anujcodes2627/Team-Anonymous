@@ -209,76 +209,74 @@ export default function AqiIndexCard(props) {
   return (
     <>
       <div className="flex flex-col items-center">
-        <div className="outerbox w-[90%] box-border m-3 p-6 border-2 border-amber-200">
-          <div className="header-box w-full flex justify-between">
+        <div className="outerbox w-[95%] md:w-[90%] box-border m-3 p-4 md:p-6 border-2 border-amber-200 rounded-2xl">
+          {/* Header */}
+          <div className="header-box w-full flex flex-col md:flex-row justify-between items-center md:items-start text-center md:text-left gap-2">
             <h1 className="text-white font-semibold text-2xl">
               Air Quality Index (AQI) <br />
               Scale
             </h1>
-            <p className="text-lg text-gray-500">
-              Know about the category of air quality index (AQI) <br /> your
-              ambient air falls in and what it implies
+            <p className="text-base text-gray-400 md:max-w-lg">
+              Know about the category of air quality index (AQI) <br />
+              your ambient air falls in and what it implies
             </p>
           </div>
 
-          <div className="line border-1 border-white mb-4 mt-4"></div>
+          {/* Divider */}
+          <div className="line border-b border-white my-4"></div>
 
+          {/* Option Selector */}
           <div className="flex justify-center">
-            <div className="option-box w-[90%] mb-8 bg-[#39414A] rounded-3xl px-2 py-1 flex justify-between">
-              {options.map((option, key) => {
-                if (option === current) {
-                  return (
-                    <button
-                      key={key}
-                      className="cursor-pointer text-lg text-blue-400 px-4 rounded-3xl bg-black"
-                    >
-                      {option}
-                    </button>
-                  );
-                } else {
-                  return (
-                    <button
-                      key={key}
-                      className="text-lg px-4 cursor-pointer text-white"
-                      onClick={() => changeCurrent(option)}
-                    >
-                      {option}
-                    </button>
-                  );
-                }
-              })}
+            <div className="option-box w-full overflow-x-auto scrollbar-hide mb-6 bg-[#39414A] rounded-3xl px-2 py-1 flex gap-2 sm:justify-center">
+              {options.map((option, key) => (
+                <button
+                  key={key}
+                  className={`text-sm sm:text-lg px-4 py-1 rounded-3xl whitespace-nowrap ${
+                    option === current
+                      ? "bg-black text-blue-400 font-semibold"
+                      : "text-white"
+                  }`}
+                  onClick={() => changeCurrent(option)}
+                >
+                  {option}
+                </button>
+              ))}
             </div>
           </div>
 
+          {/* Levels Display */}
           <div className="flex justify-center">
-            <div className="w-[90%] flex flex-col gap-4">
+            <div className="w-full flex flex-col gap-4">
               {Object.entries(airQualityLevels[current]).map(
                 ([level, info], index) => (
                   <div
                     key={level}
                     className={`${
                       index % 2 === 0 ? "bg-[#39414A]" : "bg-[#4B5563]"
-                    } text-white flex justify-between items-center px-4 py-3 rounded-xl`}
+                    } text-white flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-3 rounded-xl`}
                   >
-                    <div className="flex items-center gap-2">
-                      {/* Colored box */}
+                    {/* Left Section: Box + Label */}
+                    <div className="flex items-center gap-2 w-full md:w-1/3">
                       <div
                         className={`w-3 h-3 rounded-xl ${levelColors[level]}`}
                       ></div>
-                      {/* Level and Range */}
                       <div>
-                        {level} <br />{" "}
+                        <div className="font-medium">{level}</div>
                         <p className="font-light text-sm">{info.range}</p>
                       </div>
                     </div>
-                    <div className="text-gray-300 text-sm max-w-md">
+
+                    {/* Description */}
+                    <div className="text-gray-300 text-sm w-full md:w-2/3">
                       {info.description}
                     </div>
-                    <div>
+
+                    {/* Image */}
+                    <div className="hidden md:block">
                       <img
                         src="/images/boy.svg"
                         alt="boy"
-                        className="w-10 h-15"
+                        className="w-10 h-14"
                       />
                     </div>
                   </div>
