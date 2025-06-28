@@ -79,11 +79,12 @@ userSchema.methods.comparePassword = async function (inputPassword) {
 
 // Method to generate JWT token
 userSchema.methods.generateJwtToken = function () {
-  return jwt.sign({ userId: this._id }, process.env.SECRET_KEY, {
+  return jwt.sign({ userId: this._id }, "someSuperSecretKey12345", {
     expiresIn: "5d",
   });
 };
 
 // Export model
-const UserModel = mongoose.model("User", userSchema);
+const UserModel = mongoose.model("user", userSchema);
+
 export default UserModel;

@@ -70,26 +70,21 @@
 import axios from "axios";
 import { userRequest, userSuccess, userFail, userLogout } from "./user.reducer";
 
+// ✅ Login User
 // export const login = (user) => async (dispatch) => {
 //   try {
 //     dispatch(userRequest());
 //     const config = { headers: { "Content-Type": "application/json" } };
-//     const userData = await axios({
-//       method: "POST",
-//       url: `http://localhost:4000/user/login`,
-//       data: user,
-//       config,
-//     });
-//     axios.defaults.headers.common[
-//       "Authorization"
-//     ] = `Bearer ${userData.data.userToken}`;
-//     localStorage.setItem(
-//       "userToken",
-//       JSON.stringify({ userToken: userData.data.userToken })
+//     const userData = await axios.post(
+//       "http://localhost:4000/api/users/login",
+//       user,
+//       config
 //     );
-//     return dispatch(userSuccess(userData.data));
+//     axios.defaults.headers.common["Authorization"] = `Bearer ${userData.data.userToken}`;
+//     localStorage.setItem("userToken", JSON.stringify({ userToken: userData.data.userToken }));
+//     dispatch(userSuccess(userData.data));
 //   } catch (error) {
-//     return dispatch(userFail(error.response.data.message));
+//     dispatch(userFail(error.response?.data?.message || "Login failed"));
 //   }
 // };
 export const login = (user) => async (dispatch) => {
@@ -97,64 +92,57 @@ export const login = (user) => async (dispatch) => {
     dispatch(userRequest());
 
     const config = { headers: { "Content-Type": "application/json" } };
-
-    const { data } = await axios.post(
-      "http://localhost:4000/user/login",
+    const userData = await axios.post(
+      "http://localhost:4000/api/users/login", // ensure URL matches your backend
       user,
       config
     );
 
-    axios.defaults.headers.common["Authorization"] = `Bearer ${data.userToken}`;
-    localStorage.setItem("userToken", JSON.stringify({ userToken: data.userToken }));
-
-    dispatch(userSuccess(data));
+    axios.defaults.headers.common["Authorization"] = `Bearer ${userData.data.userToken}`;
+    localStorage.setItem("userToken", JSON.stringify({ userToken: userData.data.userToken }));
+    
+    dispatch(userSuccess(userData.data));
   } catch (error) {
-    const message = error.response?.data?.message || "Login failed";
-    dispatch(userFail(message));
+    console.log("❌ Frontend error response:", error?.response?.data); // ❗ LOG IT
+    dispatch(userFail(error.response?.data?.message || "Login failed"));
   }
 };
-
+// ✅ Signup User
 export const signUp = (user) => async (dispatch) => {
   try {
     dispatch(userRequest());
     const config = { headers: { "Content-Type": "application/json" } };
-    const userData = await axios({
-      method: "POST",
-      url: `http://localhost:4000/user/signup`,
-      data: user,
-      config,
-    });
-    axios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${userData.data.userToken}`;
-    localStorage.setItem(
-      "userToken",
-      JSON.stringify({ userToken: userData.data.userToken })
+    const userData = await axios.post(
+      "http://localhost:4000/api/users/signup",
+      user,
+      config
     );
-    return dispatch(userSuccess(userData.data));
+    axios.defaults.headers.common["Authorization"] = `Bearer ${userData.data.userToken}`;
+    localStorage.setItem("userToken", JSON.stringify({ userToken: userData.data.userToken }));
+    dispatch(userSuccess(userData.data));
   } catch (error) {
-    return dispatch(userFail(error.response.data.message));
+    dispatch(userFail(error.response?.data?.message || "Signup failed"));
   }
 };
+
+// ✅ Logout User
 export const logout = () => async (dispatch) => {
   try {
     dispatch(userRequest());
     localStorage.removeItem("userToken");
-    // window.location.reload()
-    return dispatch(userLogout());
+    dispatch(userLogout());
   } catch (error) {
-    return dispatch(userFail(error.response.data.message));
+    dispatch(userFail(error.response?.data?.message || "Logout failed"));
   }
 };
+
+// ✅ Get User Info
 export const getUserDetails = () => async (dispatch) => {
   try {
     dispatch(userRequest());
-    const userData = await axios({
-      method: "GET",
-      url: `http://localhost:4000/user/me`,
-    });
-    return dispatch(userSuccess(userData.data.user));
+    const userData = await axios.get("http://localhost:4000/api/users/me");
+    dispatch(userSuccess(userData.data.user));
   } catch (error) {
-    return dispatch(userFail(error.response.data.message));
+    dispatch(userFail(error.response?.data?.message || "User info failed"));
   }
 };

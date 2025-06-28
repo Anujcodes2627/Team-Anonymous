@@ -18,6 +18,7 @@ import LoginPage from "./Pages/LoginPage.jsx";
 import SignUp from "./Pages/SignUp.jsx";
 
 import Dashboard from "./Pages/Dashboard.jsx";
+import BlogsPage from "./Pages/BlogsPage.jsx";
 // import Contact from "./Pages/Contact.jsx";
 
 const router = createBrowserRouter(
@@ -25,10 +26,9 @@ const router = createBrowserRouter(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
-
       <Route path="login" element={<LoginPage />} />
-      <Route path="signup" element={<SignUp />} />
-
+      <Route path="signup" element={<SignUp />} />\
+      <Route path="blogs" element={<BlogsPage />} />
       {/* <Route path="contact" element={<Contact />} /> */}
       <Route path="dashboard" element={<Dashboard />} />
     </Route>
