@@ -9,13 +9,12 @@ export const logError = (error, location = "Unknown Location") => {
   console.error("Time:", new Date().toISOString());
 };
 
-
 export const createBlog = async (req, res) => {
   try {
     const { title, body } = req.body;
-    const email=req.body.createdByEmail;
+    const email = req.body.createdByEmail;
     // console.log(email);
-    
+
     const coverImageURL = req.file ? `/uploads/${req.file.filename}` : null;
 
     if (!email) {
@@ -28,7 +27,7 @@ export const createBlog = async (req, res) => {
       title,
       body,
       coverImageURL,
-      createdByEmail:email ,
+      createdByEmail: email,
     });
 
     res.status(201).json({ success: true, blog });
@@ -95,14 +94,15 @@ export const postComment = async (req, res) => {
   }
 };
 
-
 export const deleteBlog = async (req, res) => {
   try {
     const blogId = req.params.id;
     const email = req.body.email;
 
     if (!email) {
-      return res.status(400).json({ success: false, message: "Email is required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Email is required" });
     }
 
     const blog = await Blog.findById(blogId);
@@ -126,6 +126,32 @@ export const deleteBlog = async (req, res) => {
       success: false,
       message: "Server error",
       error: err.message,
+    });
+  }
+};
+
+export const singleBlog = async (req, res) => {
+  try {
+    const blogId = req.params.id;
+
+    const blog = await Blog.findById(blogId).populate(
+      "createdBy",
+      "name email"
+    );
+
+    if (!blog) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Blog not found" });
+    }
+
+    res.status(200).json({ success: true, blog });
+  } catch (error) {
+    console.error("❌ Error in getSingleBlog:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
     });
   }
 };

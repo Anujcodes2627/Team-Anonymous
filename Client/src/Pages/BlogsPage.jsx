@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,35 +6,34 @@ export default function BlogsPage() {
   const [blogs, setBlogs] = useState([]);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("userInfo"));
-    const email = user?.email;
-    // console.log(email);
-    
+  const email = user?.email;
+  // console.log(email);
 
+  const deleteBlog = async (blogId) => {
+    if (!window.confirm("Are you sure you want to delete this blog?")) return;
 
+    try {
+      // Get email from localStorage
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const email = userInfo?.email;
 
-const deleteBlog = async (blogId) => {
-  if (!window.confirm("Are you sure you want to delete this blog?")) return;
+      const res = await axios.delete(
+        `http://localhost:4000/api/blogs/${blogId}`,
+        {
+          data: { email }, // ✅ send email inside an object
+          withCredentials: true,
+        }
+      );
 
-  try {
-    // Get email from localStorage
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    const email = userInfo?.email;
-
-    const res = await axios.delete(`http://localhost:4000/api/blogs/${blogId}`, {
-      data: { email },  // ✅ send email inside an object
-      withCredentials: true,
-    });
-
-    if (res.data.success) {
-      alert("Blog deleted successfully!");
-      setBlogs((prev) => prev.filter((b) => b._id !== blogId));
+      if (res.data.success) {
+        alert("Blog deleted successfully!");
+        setBlogs((prev) => prev.filter((b) => b._id !== blogId));
+      }
+    } catch (err) {
+      console.error("Error deleting blog:", err);
+      alert("Failed to delete blog.");
     }
-  } catch (err) {
-    console.error("Error deleting blog:", err);
-    alert("Failed to delete blog.");
-  }
-};
-
+  };
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -84,7 +82,7 @@ const deleteBlog = async (blogId) => {
             key={blog._id}
             className="bg-[#39414A] rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300"
           >
-            <Link to={`/blog/${blog._id}`}>
+            <Link to={`/singleblog/${blog._id}`}>
               <img
                 src={blog.coverImageURL}
                 alt="Cover"

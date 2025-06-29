@@ -5,7 +5,8 @@ import {
   getAllBlogs,
   getBlogById,
   postComment,
-  deleteBlog
+  deleteBlog,
+  singleBlog
 } from "../controllers/Blogs.js";
 import { protect } from "../middleware/auth.js";
 const router = express.Router();
@@ -25,5 +26,6 @@ router.get("/:id", getBlogById);
 router.post("/",uploads.single("coverImage"), createBlog);
 router.post("/comment/:blogId", protect, postComment);
 router.delete("/:id", deleteBlog);
+router.get("/:id", singleBlog);
 
 export default router;

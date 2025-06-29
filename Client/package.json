@@ -29,6 +29,7 @@
     "react-router-dom": "^7.6.2",
     "recharts": "^3.0.0",
     "redux": "^5.0.1",
+    "socket.io-client": "^4.8.1",
     "tailwindcss": "^4.1.10"
   },
   "devDependencies": {

@@ -27,8 +27,10 @@ import Dashboard from "./Pages/Dashboard.jsx";
 import BlogsPage from "./Pages/BlogsPage.jsx";
 import WasteClassification from "./Pages/WasteClassification.jsx";
 import BlogUploadForm from "./components/BlogUploadForm.jsx";
+import SingleBlog from "./components/SingleBlog.jsx";
+import LiveNoiseMonitor from "./Pages/LiveNoiseMonitor.jsx";
+import CameraPage from "./components/CameraPage.jsx";
 // import Contact from "./Pages/Contact.jsx";
-
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,9 +38,11 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
       <Route path="login" element={<LoginPage />} />
-      <Route path="addblog" element={<BlogUploadForm/>} />
-      <Route path="dashboard" element={<Dashboard/>} />
-
+      <Route path="addblog" element={<BlogUploadForm />} />
+      <Route path="dashboard" element={<Dashboard />} />
+      <Route path="singleblog/:id" element={<SingleBlog />} />
+      <Route path="sound" element={<LiveNoiseMonitor />} />
+      <Route path="augmentedreality" element={<CameraPage />} />
 
       {/* Signup Routes */}
       <Route path="Signup/citizen" element={<CitizenSignUp />} />

@@ -4,6 +4,7 @@ import AqiCard from "../components/AqiCard";
 import AqiIndexCard from "../components/AqiIndexCard";
 import AQIMap from "../components/AQIMap";
 import WasteClassifierCard from "../components/WasteClassifierCard";
+import SoundDetectionCard from "../components/SoundDetectionCard";
 export default function Home(props) {
   return (
     <>
@@ -18,7 +19,10 @@ export default function Home(props) {
         </div>
 
         <AqiIndexCard />
-        <WasteClassifierCard />
+        <div className="flex justify-between w-full">
+          <WasteClassifierCard />
+          <SoundDetectionCard />
+        </div>
       </div>
     </>
   );
