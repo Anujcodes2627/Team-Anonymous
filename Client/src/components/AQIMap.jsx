@@ -1,6 +1,20 @@
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { useEffect, useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+
 import L from "leaflet";
+
+// Fix: manually import marker icon and shadow
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+const defaultIcon = L.icon({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
 
 function CurrentLocationMarker() {
   const [position, setPosition] = useState(null);
@@ -20,15 +34,11 @@ function CurrentLocationMarker() {
   }, [map]);
 
   return position === null ? null : (
-    <Marker
-      position={position}
-      icon={L.icon({ iconUrl: "/marker-icon.png", iconSize: [25, 41] })}
-    >
+    <Marker position={position} icon={defaultIcon}>
       <Popup>You are here!</Popup>
     </Marker>
   );
 }
-
 export default function AQIMap() {
   return (
     <div className="h-96 w-full">

@@ -1,48 +1,29 @@
-// // File: models/User.model.js
-// import mongoose from "mongoose";
-// import bcrypt from "bcrypt";
-// import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
+// // Define user schema
 // const userSchema = new mongoose.Schema({
 //   name: {
 //     type: String,
 //     required: true,
 //     trim: true,
-//     min: 3,
-//     max: 30,
+//     minlength: 3,
+//     maxlength: 30,
 //   },
 //   email: {
 //     type: String,
 //     required: true,
 //     trim: true,
 //     unique: true,
+//     lowercase: true,
 //   },
 //   password: {
 //     type: String,
 //     required: true,
+//     minlength: 6,
 //   },
 // });
-
-// userSchema.pre("save", async function (next) {
-//   if (!this.isModified("password")) return next();
-//   this.password = await bcrypt.hash(this.password, 10);
-//   next();
-// });
-
-// userSchema.methods.generateJwtToken = function () {
-//   return jwt.sign({ id: this._id }, process.env.SECRET_KEY, {
-//     expiresIn: "5d",
-//   });
-// };
-
-// const UserModel = mongoose.model("users", userSchema);
-// export default UserModel;
-
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-
-// Define user schema
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -62,6 +43,25 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 6,
+  },
+
+  // 👇 New fields for dashboard
+  dashboardStats: {
+    co2Saved: { type: Number, default: 0 },
+    treesSaved: { type: Number, default: 0 },
+    energySaved: { type: Number, default: 0 },
+  },
+  weeklyData: {
+    thisWeek: { type: Number, default: 0 },
+    lastWeek: { type: Number, default: 0 },
+  },
+  goals: {
+    target: { type: Number, default: 100 },
+    achieved: { type: Number, default: 0 },
+  },
+  achievements: {
+    type: [String], 
+    default: [],
   },
 });
 

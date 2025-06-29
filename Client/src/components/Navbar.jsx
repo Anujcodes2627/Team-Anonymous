@@ -1,17 +1,3 @@
-
-// // // //   const navLinks = [
-// // // //     { name: "Home", path: "/" },
-// // // //     { name: "About Us", path: "/about" },
-// // // //     { name: "Login", path: "/login" },
-// // // //     { name: "SignUp", path: "/signup" },
-// // // //     { name: "Contact", path: "/contact" },
-// // // //     { name: "Air Quality", path: "/air-quality" },
-// // // //     { name: "Blogs", path: "/blogs" },
-// // // //     // { name: "Forecast", path: "/forecast" },
-// // // //     { name: "Dashboard", path: "/dashboard" },
-// // // //   ];
-
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -29,6 +15,7 @@ export default function Navbar() {
     { name: "Blogs", path: "/blogs" },
     { name: "Login", path: "/login" },
     { name: "A R", path: "/augmentedreality"},
+    { name: "Dashboard", path: "/dashboard" },
   ];
 
   const signupOptions = [
@@ -42,18 +29,19 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-slate-900/80 backdrop-blur-md shadow">
+    // <header className="sticky top-0 ml-18 mt-3 border-amber-200 border-2 rounded-3xl z-50 w-[90%] bg-slate-900/80 backdrop-blur-3xl shadow">
+    <header className="sticky top-0 z-50 w-[90%] mx-auto mt-3 border border-white/20 rounded-3xl bg-[#0f172b] backdrop-blur-xl shadow-xl">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
         {/* Logo */}
         <Link
           to="/"
           className="flex items-center text-2xl font-bold tracking-tight text-white"
         >
-          <span className="text-sky-400">AQ</span>
-          <span className="text-green-400">I</span>
+          <span className="text-sky-400">Eco</span>
+          <span className="text-green-400">Scope</span>
         </Link>
 
-        {/* Desktop nav */}
+        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6 text-sm text-white relative">
           {commonLinks.map((link, index) => (
             <Link
@@ -66,30 +54,36 @@ export default function Navbar() {
           ))}
 
           {!user ? (
-            <div className="relative">
-              <button
-                onClick={() =>
-                  setIsSignupDropdownOpen(!isSignupDropdownOpen)
-                }
+            <>
+              <Link
+                to="/login"
                 className="hover:text-sky-400 transition-colors"
               >
-                SignUp
-              </button>
-              {isSignupDropdownOpen && (
-                <div className="absolute top-full mt-2 w-56 bg-slate-800 text-white rounded shadow-lg py-2 z-20">
-                  {signupOptions.map((option, i) => (
-                    <Link
-                      key={i}
-                      to={option.path}
-                      className="block px-4 py-2 hover:bg-slate-700"
-                      onClick={() => setIsSignupDropdownOpen(false)}
-                    >
-                      {option.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+                Login
+              </Link>
+              <div className="relative">
+                <button
+                  onClick={() => setIsSignupDropdownOpen(!isSignupDropdownOpen)}
+                  className="hover:text-sky-400 transition-colors"
+                >
+                  SignUp
+                </button>
+                {isSignupDropdownOpen && (
+                  <div className="absolute top-full mt-2 w-56 bg-slate-800 text-white rounded shadow-lg py-2 z-20">
+                    {signupOptions.map((option, i) => (
+                      <Link
+                        key={i}
+                        to={option.path}
+                        className="block px-4 py-2 hover:bg-slate-700"
+                        onClick={() => setIsSignupDropdownOpen(false)}
+                      >
+                        {option.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
           ) : (
             <button
               onClick={handleSignOut}
@@ -100,7 +94,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile menu toggle */}
+        {/* Mobile Menu Toggle */}
         <div className="md:hidden">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -111,7 +105,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile nav menu */}
+      {/* Mobile Nav Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-slate-900/90 text-white px-4 py-3 space-y-2">
           {commonLinks.map((link, index) => (
@@ -126,16 +120,25 @@ export default function Navbar() {
           ))}
 
           {!user ? (
-            signupOptions.map((option, index) => (
+            <>
               <Link
-                key={`mobile-signup-${index}`}
-                to={option.path}
+                to="/login"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block hover:text-sky-400 transition-colors"
               >
-                {option.name}
+                Login
               </Link>
-            ))
+              {signupOptions.map((option, index) => (
+                <Link
+                  key={`mobile-signup-${index}`}
+                  to={option.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block hover:text-sky-400 transition-colors"
+                >
+                  {option.name}
+                </Link>
+              ))}
+            </>
           ) : (
             <button
               onClick={() => {
