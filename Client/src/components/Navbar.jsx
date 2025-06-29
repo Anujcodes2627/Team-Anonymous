@@ -13,6 +13,8 @@ export default function Navbar() {
   const commonLinks = [
     { name: "Home", path: "/" },
     { name: "Blogs", path: "/blogs" },
+    { name: "Login", path: "/login" },
+    { name: "A R", path: "/augmentedreality"},
     { name: "Dashboard", path: "/dashboard" },
      { name: "A R", path: "/augmentedreality"},
   ];
