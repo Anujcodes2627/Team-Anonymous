@@ -93,7 +93,11 @@ function AqiCard() {
         (err) => {
           console.error("Location permission denied.", err);
           setLocation("Permission denied");
-        }
+        },{
+          enableHighAccuracy: true, // Crucial for better accuracy
+          timeout: 10000,          // How long to wait for a position (in milliseconds)
+          maximumAge: 0            // Don't use a cached position
+      }
       );
     } else {
       console.error("Geolocation is not supported by this browser.");
@@ -139,16 +143,16 @@ function AqiCard() {
           <div className="flex gap-2 md:mt-0 mt-3">
             <button
               onClick={handleLocateMe}
-              className="border border-blue-400 rounded px-3 py-1 text-sm flex items-center gap-1 text-white"
+              className="border border-blue-400 rounded px-3 py-1 text-sm flex items-center gap-1 text-white cursor-pointer hover:bg-blue-600"
             >
               <MapPin className="w-4 h-4" />
               Locate me
             </button>
             <button>
-              <Heart className="w-5 h-5 text-slate-300" />
+              <Heart className="w-5 h-5 text-slate-300 cursor-pointer hover:text-red-500" />
             </button>
             <button>
-              <Share2 className="w-5 h-5 text-slate-300" />
+              <Share2 className="w-5 h-5 text-slate-300 cursor-pointer" />
             </button>
           </div>
         </div>

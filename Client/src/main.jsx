@@ -17,7 +17,7 @@ import About from "./Pages/About.jsx";
 import Layout from "./Layout.jsx";
 
 import LoginPage from "./Pages/LoginPage.jsx";
-import CameraPage from "./components/CameraPage.jsx";
+// import CameraPage from "./components/CameraPage.jsx";
 
 // Updated SignUp routes
 import CitizenSignUp from "./Pages/Signup/CitizenSignUp.jsx";
